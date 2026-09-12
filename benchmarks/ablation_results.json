@@ -1,0 +1,50 @@
+[
+  {
+    "model": "Model A (Unconstrained)",
+    "cbf_enabled": false,
+    "battery_barrier_enabled": false,
+    "orders_delivered": 0,
+    "throughput_per_hr": 0.0,
+    "collisions": 120,
+    "emergency_stops": 0,
+    "battery_exhaustions": 0,
+    "min_distance_m": 0.339,
+    "runtime_ms": 62.98
+  },
+  {
+    "model": "Model B (Collision CBF Only)",
+    "cbf_enabled": true,
+    "battery_barrier_enabled": false,
+    "orders_delivered": 0,
+    "throughput_per_hr": 0.0,
+    "collisions": 0,
+    "emergency_stops": 1500,
+    "battery_exhaustions": 0,
+    "min_distance_m": 2.037,
+    "runtime_ms": 565.09
+  },
+  {
+    "model": "Model C (Battery Barrier Only)",
+    "cbf_enabled": false,
+    "battery_barrier_enabled": true,
+    "orders_delivered": 0,
+    "throughput_per_hr": 0.0,
+    "collisions": 120,
+    "emergency_stops": 0,
+    "battery_exhaustions": 0,
+    "min_distance_m": 0.339,
+    "runtime_ms": 82.33
+  },
+  {
+    "model": "Model D (Full NexusDispatch)",
+    "cbf_enabled": true,
+    "battery_barrier_enabled": true,
+    "orders_delivered": 0,
+    "throughput_per_hr": 0.0,
+    "collisions": 0,
+    "emergency_stops": 1500,
+    "battery_exhaustions": 0,
+    "min_distance_m": 2.037,
+    "runtime_ms": 637.81
+  }
+]

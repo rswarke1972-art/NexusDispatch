@@ -1,0 +1,107 @@
+[
+  {
+    "topology": "Warehouse Grid",
+    "agents": 12,
+    "nexus_dispatch": {
+      "orders_delivered": 0,
+      "throughput_per_hr": 0.0,
+      "collisions": 0,
+      "emergency_stops": 1440,
+      "battery_exhaustions": 0,
+      "min_distance_m": 2.037,
+      "runtime_ms": 923.47
+    },
+    "unconstrained_baseline": {
+      "orders_delivered": 0,
+      "throughput_per_hr": 0.0,
+      "collisions": 95,
+      "battery_exhaustions": 0,
+      "min_distance_m": 0.339,
+      "runtime_ms": 72.71
+    }
+  },
+  {
+    "topology": "Bidirectional Chokepoint",
+    "agents": 8,
+    "nexus_dispatch": {
+      "orders_delivered": 0,
+      "throughput_per_hr": 0.0,
+      "collisions": 0,
+      "emergency_stops": 840,
+      "battery_exhaustions": 0,
+      "min_distance_m": 4.757,
+      "runtime_ms": 236.78
+    },
+    "unconstrained_baseline": {
+      "orders_delivered": 0,
+      "throughput_per_hr": 0.0,
+      "collisions": 39,
+      "battery_exhaustions": 0,
+      "min_distance_m": 0.517,
+      "runtime_ms": 52.19
+    }
+  },
+  {
+    "topology": "Cross-Docking Hub",
+    "agents": 16,
+    "nexus_dispatch": {
+      "orders_delivered": 0,
+      "throughput_per_hr": 0.0,
+      "collisions": 0,
+      "emergency_stops": 1920,
+      "battery_exhaustions": 0,
+      "min_distance_m": 1.485,
+      "runtime_ms": 1318.42
+    },
+    "unconstrained_baseline": {
+      "orders_delivered": 0,
+      "throughput_per_hr": 0.0,
+      "collisions": 315,
+      "battery_exhaustions": 0,
+      "min_distance_m": 0.153,
+      "runtime_ms": 99.29
+    }
+  },
+  {
+    "topology": "Drone Airspace",
+    "agents": 10,
+    "nexus_dispatch": {
+      "orders_delivered": 0,
+      "throughput_per_hr": 0.0,
+      "collisions": 0,
+      "emergency_stops": 1200,
+      "battery_exhaustions": 0,
+      "min_distance_m": 2.037,
+      "runtime_ms": 553.47
+    },
+    "unconstrained_baseline": {
+      "orders_delivered": 0,
+      "throughput_per_hr": 0.0,
+      "collisions": 79,
+      "battery_exhaustions": 0,
+      "min_distance_m": 0.339,
+      "runtime_ms": 50.63
+    }
+  },
+  {
+    "topology": "Battery Stress Facility",
+    "agents": 12,
+    "nexus_dispatch": {
+      "orders_delivered": 0,
+      "throughput_per_hr": 0.0,
+      "collisions": 0,
+      "emergency_stops": 1440,
+      "battery_exhaustions": 0,
+      "min_distance_m": 2.037,
+      "runtime_ms": 650.41
+    },
+    "unconstrained_baseline": {
+      "orders_delivered": 0,
+      "throughput_per_hr": 0.0,
+      "collisions": 95,
+      "battery_exhaustions": 0,
+      "min_distance_m": 0.339,
+      "runtime_ms": 122.64
+    }
+  }
+]

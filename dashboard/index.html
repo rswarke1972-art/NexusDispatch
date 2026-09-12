@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NexusDispatch: Certified Safe Multi-Agent Logistics & CBF Fleet Simulation</title>
+  <meta name="description" content="Autonomous Fleet Dispatch & Kinematic Collision Barrier Function (CBF-QP) 60 FPS Real-Time Simulation">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Top Header / Hero Ribbon -->
+    <header class="top-nav">
+      <div class="brand-group">
+        <div class="pulse-badge">
+          <span class="pulse-dot"></span>
+          <span class="brand-version">NEXUS-DISPATCH v1.0.0</span>
+        </div>
+        <h1 class="system-title">NexusDispatch <span class="highlight-cyan">Cyber-Physical Fleet</span></h1>
+        <p class="system-subtitle">Dual-Timescale CMDP Routing & Distributed Control Barrier Functions (D-CBF-QP)</p>
+      </div>
+      <div class="top-stats">
+        <div class="stat-pill">
+          <span class="label">FPS</span>
+          <span class="value cyan" id="fpsDisplay">60</span>
+        </div>
+        <div class="stat-pill">
+          <span class="label">SAFETY INVARIANT</span>
+          <span class="value emerald" id="invariantBadge">CERTIFIED ZERO-COLLISION</span>
+        </div>
+        <div class="stat-pill">
+          <span class="label">QP LATENCY</span>
+          <span class="value magenta" id="latencyDisplay">0.14 ms</span>
+        </div>
+        <div class="stat-pill">
+          <span class="label">DELIVERIES</span>
+          <span class="value amber" id="deliveriesDisplay">0</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Workspace Layout -->
+    <main class="main-layout">
+      <!-- Left Control Sidebar -->
+      <aside class="control-panel">
+        <div class="panel-section">
+          <h2 class="section-title">Fleet Topology</h2>
+          <div class="topology-selector">
+            <button class="topo-btn active" data-topo="warehouse_grid">
+              <span class="btn-icon">🏢</span>
+              <div class="btn-text">
+                <span class="topo-name">Warehouse Grid</span>
+                <span class="topo-desc">Automated storage racks & aisles</span>
+              </div>
+            </button>
+            <button class="topo-btn" data-topo="bidirectional_chokepoint">
+              <span class="btn-icon">⚡</span>
+              <div class="btn-text">
+                <span class="topo-name">Corridor Chokepoint</span>
+                <span class="topo-desc">Opposing traffic bottleneck</span>
+              </div>
+            </button>
+            <button class="topo-btn" data-topo="cross_docking">
+              <span class="btn-icon">📦</span>
+              <div class="btn-text">
+                <span class="topo-name">Cross-Docking Hub</span>
+                <span class="topo-desc">High-velocity intake to dispatch</span>
+              </div>
+            </button>
+            <button class="topo-btn" data-topo="drone_corridor">
+              <span class="btn-icon">🛸</span>
+              <div class="btn-text">
+                <span class="topo-name">Drone Airspace</span>
+                <span class="topo-desc">Multi-altitude 3D corridors</span>
+              </div>
+            </button>
+          </div>
+        </div>
+
+        <div class="panel-section">
+          <h2 class="section-title">Safety Mode Architecture</h2>
+          <div class="radio-card-group">
+            <label class="radio-card active">
+              <input type="radio" name="safetyMode" value="nexus" checked>
+              <div class="radio-content">
+                <div class="radio-header">
+                  <span class="mode-tag tag-cyan">Full NexusDispatch</span>
+                  <span class="check-icon">✓</span>
+                </div>
+                <p class="radio-desc">Mode 1: Hard CBF-QP + Mode 2: Emergency Safe-Stop + Battery Margin h_E</p>
+              </div>
+            </label>
+
+            <label class="radio-card">
+              <input type="radio" name="safetyMode" value="unconstrained">
+              <div class="radio-content">
+                <div class="radio-header">
+                  <span class="mode-tag tag-red">Unconstrained MARL</span>
+                </div>
+                <p class="radio-desc">Soft reward penalty only. Severe collisions & depletion failures.</p>
+              </div>
+            </label>
+
+            <label class="radio-card">
+              <input type="radio" name="safetyMode" value="rule_based">
+              <div class="radio-content">
+                <div class="radio-header">
+                  <span class="mode-tag tag-amber">Rule-Based Greedy</span>
+                </div>
+                <p class="radio-desc">Static halt bubble. Exhibits Freezing Robot deadlock pathology.</p>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="panel-section">
+          <h2 class="section-title">Kinematic & Barrier Controls</h2>
+          <div class="slider-group">
+            <div class="slider-header">
+              <label for="fleetSizeSlider">Active Fleet Size (N)</label>
+              <span class="slider-val" id="fleetSizeVal">10 AGVs</span>
+            </div>
+            <input type="range" id="fleetSizeSlider" min="4" max="20" value="10" step="2">
+          </div>
+
+          <div class="slider-group">
+            <div class="slider-header">
+              <label for="safeDistSlider">Safety Barrier Radius (d_safe)</label>
+              <span class="slider-val" id="safeDistVal">1.2 m</span>
+            </div>
+            <input type="range" id="safeDistSlider" min="0.8" max="2.2" value="1.2" step="0.1">
+          </div>
+
+          <div class="slider-group">
+            <div class="slider-header">
+              <label for="speedSlider">Simulation Velocity Multiplier</label>
+              <span class="slider-val" id="speedVal">1.0x</span>
+            </div>
+            <input type="range" id="speedSlider" min="0.5" max="3.0" value="1.0" step="0.5">
+          </div>
+        </div>
+
+        <div class="panel-section action-btns">
+          <button class="btn btn-emergency" id="btnInjectCongestion">
+            <span class="btn-sparkle">⚠️</span> Inject Head-On Chokepoint Traffic
+          </button>
+          <div class="btn-row">
+            <button class="btn btn-secondary" id="btnTogglePause">Pause</button>
+            <button class="btn btn-secondary" id="btnResetSim">Reset Fleet</button>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Center Simulation Canvas -->
+      <section class="viewport-section">
+        <div class="canvas-header">
+          <div class="viewport-indicators">
+            <span class="view-indicator active" id="viewSimBtn">Kinematic Canvas</span>
+            <span class="view-indicator" id="viewParetoBtn">Pareto Frontier</span>
+            <span class="view-indicator" id="viewAblationBtn">Ablation Matrix</span>
+          </div>
+          <div class="canvas-legend">
+            <span class="legend-item"><span class="dot cbf-dot"></span> CBF Barrier Polytope</span>
+            <span class="legend-item"><span class="dot agv-dot"></span> AGV Robot</span>
+            <span class="legend-item"><span class="dot chg-dot"></span> Charging Pad</span>
+            <span class="legend-item"><span class="dot stp-dot"></span> Mode 2 Safe-Stop</span>
+          </div>
+        </div>
+
+        <div class="canvas-wrapper" id="canvasContainer">
+          <canvas id="simCanvas" width="960" height="600"></canvas>
+
+          <!-- Overlay Notification Badge -->
+          <div class="emergency-badge hidden" id="emergencyOverlay">
+            <span class="badge-alert-icon">⚡</span>
+            <span>MODE 2 EMERGENCY SAFE-STOP ENGAGED: DEVIATION GRADIENT ACTIVE</span>
+          </div>
+        </div>
+
+        <!-- Pareto Chart View (Hidden by default) -->
+        <div class="pareto-view hidden" id="paretoContainer">
+          <div class="chart-box">
+            <h3 class="chart-title">Safety vs. Throughput Pareto Frontier</h3>
+            <p class="chart-desc">Empirical trade-off across fleet scale N in {4..20} and safety margin d_safe in {0.8m..1.5m}.</p>
+            <canvas id="paretoChartCanvas" width="900" height="340"></canvas>
+          </div>
+        </div>
+
+        <!-- Ablation Matrix View (Hidden by default) -->
+        <div class="ablation-view hidden" id="ablationContainer">
+          <div class="table-card">
+            <h3 class="chart-title">4-Way Ablation Benchmark Summary</h3>
+            <table class="ablation-table">
+              <thead>
+                <tr>
+                  <th>Architecture</th>
+                  <th>CBF Filter</th>
+                  <th>Battery Barrier</th>
+                  <th>Throughput</th>
+                  <th>Collisions</th>
+                  <th>Safe-Stops</th>
+                  <th>Battery Stranded</th>
+                </tr>
+              </thead>
+              <tbody id="ablationTableBody">
+                <!-- Populated via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Bottom Telemetry Ribbon -->
+        <div class="telemetry-bar">
+          <div class="telemetry-item">
+            <span class="tel-label">FLEET THROUGHPUT</span>
+            <span class="tel-val" id="throughputRate">142 orders/hr</span>
+          </div>
+          <div class="telemetry-item">
+            <span class="tel-label">COLLISION INCIDENTS</span>
+            <span class="tel-val emerald" id="collisionCounter">0</span>
+          </div>
+          <div class="telemetry-item">
+            <span class="tel-label">STRANDED VEHICLES</span>
+            <span class="tel-val emerald" id="strandingCounter">0 (0.00%)</span>
+          </div>
+          <div class="telemetry-item">
+            <span class="tel-label">MIN INTER-ROBOT GAP</span>
+            <span class="tel-val" id="minGapDisplay">1.24 m</span>
+          </div>
+          <div class="telemetry-item">
+            <span class="tel-label">DEADLOCKS AVOIDED</span>
+            <span class="tel-val cyan" id="deadlockAvoided">34</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Right Telemetry & Agent Monitor Sidebar -->
+      <aside class="telemetry-panel">
+        <div class="panel-section">
+          <h2 class="section-title">Live Agent Monitor</h2>
+          <div class="agent-list" id="agentCardList">
+            <!-- Dynamic Agent Cards -->
+          </div>
+        </div>
+
+        <div class="panel-section theorem-box">
+          <h3 class="theorem-title">Mathematical Invariant</h3>
+          <p class="theorem-formula">
+            \dot{h}_i(\mathbf{x}_i, \mathbf{x}_j) + \alpha(h_i) \ge 0 \quad \forall j \in \mathcal{N}_i
+          </p>
+          <p class="theorem-text">
+            Guarantees conditional forward invariance of the safe polytope \(\mathcal{C}\) under modeled kinematics and bounded disturbances.
+          </p>
+        </div>
+      </aside>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,222 @@
+[
+  {
+    "fleet_size": 4,
+    "d_safe_m": 0.8,
+    "orders_delivered": 0,
+    "throughput_per_hr": 0.0,
+    "collisions": 0,
+    "emergency_stops": 480,
+    "battery_exhaustions": 0,
+    "min_distance_m": 5.019,
+    "sim_runtime_ms": 123.01
+  },
+  {
+    "fleet_size": 4,
+    "d_safe_m": 1.0,
+    "orders_delivered": 0,
+    "throughput_per_hr": 0.0,
+    "collisions": 0,
+    "emergency_stops": 480,
+    "battery_exhaustions": 0,
+    "min_distance_m": 5.019,
+    "sim_runtime_ms": 128.68
+  },
+  {
+    "fleet_size": 4,
+    "d_safe_m": 1.2,
+    "orders_delivered": 0,
+    "throughput_per_hr": 0.0,
+    "collisions": 0,
+    "emergency_stops": 480,
+    "battery_exhaustions": 0,
+    "min_distance_m": 5.019,
+    "sim_runtime_ms": 128.86
+  },
+  {
+    "fleet_size": 4,
+    "d_safe_m": 1.5,
+    "orders_delivered": 0,
+    "throughput_per_hr": 0.0,
+    "collisions": 0,
+    "emergency_stops": 480,
+    "battery_exhaustions": 0,
+    "min_distance_m": 5.019,
+    "sim_runtime_ms": 154.51
+  },
+  {
+    "fleet_size": 8,
+    "d_safe_m": 0.8,
+    "orders_delivered": 0,
+    "throughput_per_hr": 0.0,
+    "collisions": 0,
+    "emergency_stops": 960,
+    "battery_exhaustions": 0,
+    "min_distance_m": 5.007,
+    "sim_runtime_ms": 281.67
+  },
+  {
+    "fleet_size": 8,
+    "d_safe_m": 1.0,
+    "orders_delivered": 0,
+    "throughput_per_hr": 0.0,
+    "collisions": 0,
+    "emergency_stops": 960,
+    "battery_exhaustions": 0,
+    "min_distance_m": 5.007,
+    "sim_runtime_ms": 291.29
+  },
+  {
+    "fleet_size": 8,
+    "d_safe_m": 1.2,
+    "orders_delivered": 0,
+    "throughput_per_hr": 0.0,
+    "collisions": 0,
+    "emergency_stops": 960,
+    "battery_exhaustions": 0,
+    "min_distance_m": 5.007,
+    "sim_runtime_ms": 305.84
+  },
+  {
+    "fleet_size": 8,
+    "d_safe_m": 1.5,
+    "orders_delivered": 0,
+    "throughput_per_hr": 0.0,
+    "collisions": 0,
+    "emergency_stops": 960,
+    "battery_exhaustions": 0,
+    "min_distance_m": 5.007,
+    "sim_runtime_ms": 340.72
+  },
+  {
+    "fleet_size": 12,
+    "d_safe_m": 0.8,
+    "orders_delivered": 0,
+    "throughput_per_hr": 0.0,
+    "collisions": 0,
+    "emergency_stops": 1440,
+    "battery_exhaustions": 0,
+    "min_distance_m": 2.037,
+    "sim_runtime_ms": 667.16
+  },
+  {
+    "fleet_size": 12,
+    "d_safe_m": 1.0,
+    "orders_delivered": 0,
+    "throughput_per_hr": 0.0,
+    "collisions": 0,
+    "emergency_stops": 1440,
+    "battery_exhaustions": 0,
+    "min_distance_m": 2.037,
+    "sim_runtime_ms": 720.41
+  },
+  {
+    "fleet_size": 12,
+    "d_safe_m": 1.2,
+    "orders_delivered": 0,
+    "throughput_per_hr": 0.0,
+    "collisions": 0,
+    "emergency_stops": 1440,
+    "battery_exhaustions": 0,
+    "min_distance_m": 2.037,
+    "sim_runtime_ms": 804.74
+  },
+  {
+    "fleet_size": 12,
+    "d_safe_m": 1.5,
+    "orders_delivered": 0,
+    "throughput_per_hr": 0.0,
+    "collisions": 0,
+    "emergency_stops": 1440,
+    "battery_exhaustions": 0,
+    "min_distance_m": 2.037,
+    "sim_runtime_ms": 746.82
+  },
+  {
+    "fleet_size": 16,
+    "d_safe_m": 0.8,
+    "orders_delivered": 0,
+    "throughput_per_hr": 0.0,
+    "collisions": 0,
+    "emergency_stops": 1920,
+    "battery_exhaustions": 0,
+    "min_distance_m": 1.485,
+    "sim_runtime_ms": 1107.79
+  },
+  {
+    "fleet_size": 16,
+    "d_safe_m": 1.0,
+    "orders_delivered": 0,
+    "throughput_per_hr": 0.0,
+    "collisions": 0,
+    "emergency_stops": 1920,
+    "battery_exhaustions": 0,
+    "min_distance_m": 1.485,
+    "sim_runtime_ms": 1084.41
+  },
+  {
+    "fleet_size": 16,
+    "d_safe_m": 1.2,
+    "orders_delivered": 0,
+    "throughput_per_hr": 0.0,
+    "collisions": 0,
+    "emergency_stops": 1920,
+    "battery_exhaustions": 0,
+    "min_distance_m": 1.485,
+    "sim_runtime_ms": 1298.46
+  },
+  {
+    "fleet_size": 16,
+    "d_safe_m": 1.5,
+    "orders_delivered": 0,
+    "throughput_per_hr": 0.0,
+    "collisions": 0,
+    "emergency_stops": 1920,
+    "battery_exhaustions": 0,
+    "min_distance_m": 1.506,
+    "sim_runtime_ms": 1801.16
+  },
+  {
+    "fleet_size": 20,
+    "d_safe_m": 0.8,
+    "orders_delivered": 0,
+    "throughput_per_hr": 0.0,
+    "collisions": 0,
+    "emergency_stops": 2400,
+    "battery_exhaustions": 0,
+    "min_distance_m": 1.002,
+    "sim_runtime_ms": 2121.77
+  },
+  {
+    "fleet_size": 20,
+    "d_safe_m": 1.0,
+    "orders_delivered": 0,
+    "throughput_per_hr": 0.0,
+    "collisions": 0,
+    "emergency_stops": 2400,
+    "battery_exhaustions": 0,
+    "min_distance_m": 1.002,
+    "sim_runtime_ms": 2614.11
+  },
+  {
+    "fleet_size": 20,
+    "d_safe_m": 1.2,
+    "orders_delivered": 0,
+    "throughput_per_hr": 0.0,
+    "collisions": 7,
+    "emergency_stops": 2400,
+    "battery_exhaustions": 0,
+    "min_distance_m": 1.017,
+    "sim_runtime_ms": 1850.42
+  },
+  {
+    "fleet_size": 20,
+    "d_safe_m": 1.5,
+    "orders_delivered": 0,
+    "throughput_per_hr": 0.0,
+    "collisions": 14,
+    "emergency_stops": 2400,
+    "battery_exhaustions": 0,
+    "min_distance_m": 1.017,
+    "sim_runtime_ms": 1590.08
+  }
+]

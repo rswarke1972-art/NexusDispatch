@@ -850,7 +850,7 @@
         const invBadge = document.getElementById('invariantBadge');
         if (invBadge) {
           if (safetyMode === 'nexus') {
-            invBadge.textContent = 'CERTIFIED ZERO-COLLISION';
+            invBadge.textContent = 'MODELED ZERO-COLLISION INVARIANT';
             invBadge.className = 'value emerald';
           } else if (safetyMode === 'unconstrained') {
             invBadge.textContent = 'SAFETY INVARIANT DISABLED';

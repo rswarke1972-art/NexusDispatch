@@ -1,17 +1,17 @@
 # NexusDispatch
 
-**Distributed Control Barrier Functions & Primal-Dual CMDP for Certified Safe Autonomous Fleet Logistics**
+**A dual-timescale multi-agent dispatch architecture combining primal-dual constrained learning with distributed control-barrier safety filtering for collision-free, energy-aware fleet coordination.**
 
 [![Tests](https://img.shields.io/badge/tests-12%2F12%20passing-brightgreen)](#automated-unit-tests)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Safety](https://img.shields.io/badge/Safety%20Invariant-Certified%20Zero--Collision-cyan)](#theoretical-guarantees)
+[![Safety](https://img.shields.io/badge/Safety%20Invariant-Modeled%20Zero--Collision-cyan)](#theoretical-guarantees)
 [![Live Simulation](https://img.shields.io/badge/Simulation-Live%2060%20FPS%20Canvas-emerald)](https://rswarke1972-art.github.io/NexusDispatch/)
 
 ---
 
 ## Overview
 
-Autonomous ground vehicles (AGVs, AMRs) and delivery drones in modern fulfillment centers face a severe trade-off: maximizing parcel throughput while preventing physical collisions and depot battery stranding. Traditional discrete Multi-Agent Path Finding (MAPF) suffers from combinatorial planning complexity and fragile re-planning under continuous kinematic disturbances. Unconstrained Deep MARL policies with soft reward penalties cannot guarantee physical safety. Furthermore, static conservative safety bubbles trigger the notorious "freezing robot" deadlock pathology at narrow aisle bottlenecks.
+Autonomous ground vehicles (AGVs, AMRs) and delivery drones in modern fulfillment centers face a severe operational tension: maximizing parcel throughput while preventing physical collisions and depot battery stranding. Traditional discrete Multi-Agent Path Finding (MAPF) suffers from combinatorial planning complexity and fragile re-planning under continuous kinematic disturbances. Unconstrained Deep MARL policies with soft reward penalties cannot guarantee physical safety. Furthermore, static conservative safety bubbles trigger the notorious "freezing robot" deadlock pathology at narrow aisle bottlenecks.
 
 **NexusDispatch** introduces a dual-timescale cyber-physical architecture:
 - **Macro-Timescale Strategic Routing (1 Hz):** Primal-Dual Actor-Critic (PDAC) CMDP policy adaptively updating dual Lagrangian multipliers $\lambda_k \leftarrow [\lambda_k + \eta_\lambda (C_k - d_k)]_+$, achieving asymptotic sub-linear constraint violation regret $\mathcal{R}_c(T) = o(T)$.
@@ -31,7 +31,7 @@ Autonomous ground vehicles (AGVs, AMRs) and delivery drones in modern fulfillmen
 |  1. MACRO-TIMESCALE STRATEGIC LAYER (1 Hz)                                   |
 |     - Primal-Dual Actor-Critic CMDP Solver                                    |
 |     - Dual Lagrangian Multiplier Adaptation: lambda <- [lambda + eta(C - d)]+ |
-|     - Asymptotic Sub-linear Regret: R_c(T) = o(T)                             |
+|     - Asymptotic Sub-linear Regret Target: R_c(T) = o(T)                      |
 |                                     |                                         |
 |                                     v  u_RL (Nominal Velocity Action)         |
 |  2. CONTINUOUS BATTERY MARGIN BARRIER MONITOR                                |
@@ -48,31 +48,35 @@ Autonomous ground vehicles (AGVs, AMRs) and delivery drones in modern fulfillmen
 |     |  [NO]  -> Mode 2: Emergency Safe-Stop (Max Brake + Gradient Push) |     |
 |     +-------------------------------------------------------------------+     |
 |                                     |                                         |
-|                                     v  u_safe (Certified Safe Control)        |
+|                                     v  u_safe (CBF-Filtered Safe Control)     |
 |  4. CONTINUOUS KINEMATIC INTEGRATION & WAREHOUSE ACTUATORS                    |
 |     - p_i(t + dt) = p_i(t) + u_safe * dt                                      |
-|     - 100% Forward Invariance | 0 Collisions | 0 Stranded Vehicles            |
+|     - Formal: Forward Invariance Under Modeled Dynamics                       |
+|     - Empirical: 0 Simulated Collisions | 0 Stranded Vehicles                 |
 +-------------------------------------------------------------------------------+
 ```
 
 ---
 
-## Mathematical Guarantees & Theorems
+## Theoretical Guarantees & Empirical Verification
 
 ### Theorem 1: Conditional Forward Invariance
-Under modeled kinematic dynamics $\dot{\mathbf{p}} = \mathbf{v}$, bounded disturbances $\|\mathbf{w}\| \le w_{\max}$, and accurate state estimation:
+- **Formal Statement:** Under modeled kinematic dynamics $\dot{\mathbf{p}} = \mathbf{v}$, bounded disturbances $\|\mathbf{w}\| \le w_{\max}$, and accurate state estimation:
 $$\dot{h}_{ij} + \alpha(h_{ij}) \ge 0 \implies \mathbf{x}(t) \in \mathcal{C} \quad \forall t \ge 0$$
 If multi-agent congestion temporarily produces an empty hard QP polytope, Mode 2 engages an emergency deceleration-repulsion gradient guaranteeing monotonic dissipation of kinetic collision energy.
+- **Empirical Observation:** 0 collisions across five synthetic benchmark logistics topologies.
 
-### Theorem 2: Certified Zero Vehicle Stranding
-Let $\mathbf{p}_{\text{charger}}^*$ denote the optimal charging dock. With dynamic battery margin:
+### Theorem 2: Non-Stranding Energy Margin
+- **Formal Statement:** Let $\mathbf{p}_{\text{charger}}^*$ denote the optimal charging dock. With dynamic battery margin:
 $$h_E(E_i, \mathbf{p}_i) = E_i - E_{\min} - \kappa \cdot \|\mathbf{p}_i - \mathbf{p}_{\text{charger}}^*\| \cdot (1 + \mu \cdot m_{\text{payload}}) \ge 0$$
-any vehicle executing the diversion policy reaches a charging pad with residual energy $E \ge E_{\min}$.
+any vehicle executing the diversion policy reaches a charging pad with residual energy $E \ge E_{\min}$ under modeled dissipation.
+- **Empirical Observation:** 0 stranded vehicles across all evaluated configurations.
 
 ### Theorem 3: Asymptotic Sub-Linear Constraint Violation Regret
-Under Slater's condition, the Primal-Dual Actor-Critic policy satisfies:
+- **Formal Statement:** Under Slater's condition (strictly feasible baseline policy) and bounded subgradients, the Primal-Dual Actor-Critic policy with step size $\eta_\lambda = O(1/\sqrt{T})$ satisfies:
 $$\mathcal{R}_c(T) = \sum_{t=1}^T (C(s_t, a_t) - d) = O(\sqrt{T}) = o(T)$$
-guaranteeing that time-averaged constraint violations vanish asymptotically.
+guaranteeing that time-averaged constraint violations vanish asymptotically ($\lim_{T \to \infty} \frac{\mathcal{R}_c(T)}{T} \le 0$).
+- **Empirical Numerical Validation:** Unit test `test_07_asymptotic_sublinear_regret` validates empirical convergence toward sublinear average constraint violation under a Slater-feasible synthetic environment.
 
 ---
 
@@ -80,12 +84,17 @@ guaranteeing that time-averaged constraint violations vanish asymptotically.
 
 ### 1. 4-Way Ablation Benchmark (10 AGVs, 150 Steps)
 
-| Architecture | CBF Safety Filter | Battery Barrier | Collisions | Emergency Safe-Stops | Stranded Vehicles | Min Gap |
+| Architecture | CBF Safety Filter | Battery Barrier | Simulated Collisions | Emergency Safe-Stops | Stranded Vehicles | Min Gap |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
 | **Model A: Unconstrained MARL** | Disabled | Disabled | 120 | 0 | 18.4% | 0.339 m |
 | **Model B: Collision CBF Only** | Active (Hard QP) | Disabled | **0** | 1,500 | 14.2% | 2.037 m |
 | **Model C: Battery Barrier Only** | Disabled | Active ($h_E$) | 120 | 0 | **0.0%** | 0.339 m |
 | **Model D: Full NexusDispatch** | **Active (Two-Mode)** | **Active ($h_E$)** | **0** | 1,500 | **0.0%** | **2.037 m** |
+
+*Takeaway:* The four-way ablation clearly decouples the architectural contributions:
+- $\text{CBF} \to \text{physical collision safety}$
+- $\text{Battery barrier} \to \text{energy safety}$
+- $\text{PDAC} + \text{CBF} + \text{battery barrier} \to \text{complete safe dispatch architecture}$
 
 ### 2. Multi-Topology Performance
 

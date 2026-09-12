@@ -164,8 +164,13 @@ class TestNexusDispatch(unittest.TestCase):
         pdac.update_step(obs, action=0, reward=1.0, costs=[0.0], next_obs=next_obs, done=False)
         self.assertLess(pdac.lambdas[0], expected_lambda)
 
-    # 7. Asymptotic Sub-Linear Regret
+    # 7. Asymptotic Sub-Linear Regret (Empirical Convergence Validation)
     def test_07_asymptotic_sublinear_regret(self):
+        """
+        Empirical convergence toward sublinear average constraint violation
+        under a Slater-feasible synthetic environment. Evaluates numerical
+        behavior of dual multiplier adaptation as R_c(T) / T -> 0.
+        """
         pdac = PrimalDualActorCritic(obs_dim=4, action_dim=2, lr_dual=0.05, constraint_thresholds=[0.30])
         obs = np.array([0.1, 0.2, 0.1, 0.0])
 
